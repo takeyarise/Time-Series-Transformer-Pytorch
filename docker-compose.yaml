@@ -1,0 +1,24 @@
+version: "3"
+services:
+  pytorchlab:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/home/useruser/workspace
+    ports:
+      - "9999:9999"
+    entrypoint: >
+      jupyter-lab
+      --ip=0.0.0.0
+      --port=9999
+      --no-browser
+      --NotebookApp.token=''
+      --notebook-dir=/home/useruser
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # device_ids: ['1']
+              capabilities: [gpu]
